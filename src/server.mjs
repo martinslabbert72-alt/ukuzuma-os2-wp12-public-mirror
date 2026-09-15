@@ -1,5 +1,5 @@
 import http from 'node:http';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 
 const SITE_ID = process.env.SITE_ID || 'UNSET';
 const LAB_TOKEN = process.env.LAB_TOKEN || 'UNSET';
@@ -25,7 +25,7 @@ function authorized(req) {
 }
 const server = http.createServer(async (req, res) => {
   if (req.method === 'GET' && req.url === '/health') {
-    return send(res, 200, {status:'PASS', siteId:SITE_ID, release:RELEASE, releaseDigest:RELEASE_DIGEST});
+    return send(res, 200, {status:'PASS', siteId:SITE_ID, release:RELEASE, releaseDigest:RELEASE_DIGEST, instanceId:INSTANCE_ID, bootedAt:BOOTED_AT});
   }
   if (!authorized(req)) return send(res, 401, {status:'DENY', code:'AUTH_REQUIRED'});
 
