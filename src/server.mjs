@@ -7,6 +7,8 @@ const PORT = Number(process.env.PORT || 3000);
 const RELEASE = process.env.RELEASE_ID || 'wp12-site-0.1.0';
 const digest = value => createHash('sha256').update(String(value)).digest('hex');
 const RELEASE_DIGEST = digest(`${RELEASE}|${process.env.SOURCE_DIGEST || 'source'}`);
+const INSTANCE_ID = randomUUID();
+const BOOTED_AT = new Date().toISOString();
 
 function send(res, status, body) {
   const text = `${JSON.stringify(body)}\n`;
